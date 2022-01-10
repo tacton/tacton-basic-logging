@@ -50,4 +50,11 @@
     <scm>
         <developerConnection>scm:git:https://github.com/tacton/tacton-basic-logging.git</developerConnection>
     </scm>
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>Github repo</name>
+            <url>https://github.com/tacton/tacton-basic-logging.git</url>
+        </repository>
+    </distributionManagement>
 </project>
