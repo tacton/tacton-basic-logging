@@ -32,6 +32,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.FactoryConfigurationError;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -886,12 +887,21 @@ public class DOMConfigurator implements Configurator {
                     OptionConverter.getSystemProperty(dbfKey,
                             null));
             dbf = DocumentBuilderFactory.newInstance();
+            //dbf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            dbf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+            dbf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+            dbf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd", false);
+            dbf.setXIncludeAware(false);
+            dbf.setExpandEntityReferences(false);
             LogLog.debug("Standard DocumentBuilderFactory search succeded.");
             LogLog.debug("DocumentBuilderFactory is: " + dbf.getClass().getName());
         } catch (FactoryConfigurationError fce) {
             Exception e = fce.getException();
             LogLog.debug("Could not instantiate a DocumentBuilderFactory.", e);
             throw fce;
+        } catch (ParserConfigurationException pce) {
+            LogLog.debug("Could not instantiate a DocumentBuilderFactory.", pce);
+            throw new RuntimeException(pce);
         }
 
         try {
