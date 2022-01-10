@@ -54,7 +54,7 @@
         <repository>
             <id>github</id>
             <name>Github repo</name>
-            <url>https://github.com/tacton/tacton-basic-logging.git</url>
+            <url>https://maven.pkg.github.com/tacton/tacton-basic-logging.git</url>
         </repository>
     </distributionManagement>
 </project>
