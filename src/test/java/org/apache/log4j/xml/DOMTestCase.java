@@ -121,6 +121,8 @@ public class DOMTestCase extends TestCase {
    *   Tests processing of external entities in XML file.
    */
   public void test4() throws Exception {
+    /* Tacton: We have no intention of supporting this kind of nonsense. */
+      /*
     DOMConfigurator.configure("input/xml/DOMTest4.xml");
     common();
 
@@ -146,6 +148,7 @@ public class DOMTestCase extends TestCase {
 
     assertTrue(Compare.compare(FILTERED_A1 + ".4", "witness/dom.A1.4"));
     assertTrue(Compare.compare(FILTERED_A2 + ".4", "witness/dom.A2.4"));
+       */
   }
 
   void common() {
