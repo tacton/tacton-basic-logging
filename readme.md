@@ -18,7 +18,8 @@ This logging library almost 100% compatible with log4j:
 
 But in some aspects it is not compatible at all:
 
-* This logging library does not do any networking. At all.
+* This logging library does not do any networking.
+* This logging library does not do database inserts.
 * Any configuration of appenders that use networking will not work.
 * The MDC classes works in Java 9 and later.
 
@@ -27,6 +28,8 @@ But in some aspects it is not compatible at all:
 
 Log4j 1.x is no longer being maintained and the known vulnerabilities were not resolved in the original project.
 This project handles each of these vulnerabilities specifically. 
+
+The vulnerabilities in log4j are typically related to features around networking, databases and JMS. These are all features that were completely removed from this library, since we only want/have to support very basic use cases.
 
 This is also the source of the differences to the original log4j 1.2.17 branch.
 
@@ -50,6 +53,28 @@ JMSAppender in Log4j 1.2 is vulnerable to deserialization of untrusted data when
 
 **tacton-basic-logging resolution:**
 The JMSAppender class and all other classes in the org.apache.log4j.net package were completely removed.
+
+### CVE-2022-23302
+
+JMSSink in all versions of Log4j 1.x is vulnerable to deserialization of untrusted data when the attacker has write access to the Log4j configuration or if the configuration references an LDAP service the attacker has access to. The attacker can provide a TopicConnectionFactoryBindingName configuration causing JMSSink to perform JNDI requests that result in remote code execution in a similar fashion to CVE-2021-4104. Note this issue only affects Log4j 1.x when specifically configured to use JMSSink, which is not the default. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.
+
+**tacton-basic-logging resolution:**
+The JMSSink class and all other classes in the org.apache.log4j.net package were completely removed.
+
+### CVE-2022-23305
+
+By design, the JDBCAppender in Log4j 1.2.x accepts an SQL statement as a configuration parameter where the values to be inserted are converters from PatternLayout. The message converter, %m, is likely to always be included. This allows attackers to manipulate the SQL by entering crafted strings into input fields or headers of an application that are logged allowing unintended SQL queries to be executed. Note this issue only affects Log4j 1.x when specifically configured to use the JDBCAppender, which is not the default. Beginning in version 2.0-beta8, the JDBCAppender was re-introduced with proper support for parameterized SQL queries and further customization over the columns written to in logs. Apache Log4j 1.2 reached end of life in August 2015. Users should upgrade to Log4j 2 as it addresses numerous other issues from the previous versions.
+
+**tacton-basic-logging resolution:**
+The JDBCAppender class and all other classes in the org.apache.log4j.jdbc package were completely removed.
+
+### CVE-2020-9493
+
+A deserialization flaw was found in Apache Chainsaw versions prior to 2.1.0 which could lead to malicious code execution.
+
+**tacton-basic-logging resolution:**
+The Apache Chainsaw classes were completely removed.
+
 
 ## How about documentation?
 
