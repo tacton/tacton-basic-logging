@@ -26,12 +26,18 @@ But in some aspects it is not compatible at all:
 
 ## About known log4j 1.x vulnerabilities
 
-Log4j 1.x is no longer being maintained and the known vulnerabilities were not resolved in the original project.
-This project handles each of these vulnerabilities specifically. 
+Log4j 1.x is no longer being maintained and all known vulnerabilities were not resolved in the original project.
+This project's approach to security is to remove anything network or database related and provide only very basic logfile handling.
+
+Below we list the known vulnerabilities for log4j 1.x and explain how and why this library is not subject to these vulnerabilities.
+We did not make any specific changes to handle specific vulnerabilities, but instead simply removed everything not related to basic logging.
+This simple strategy resolved all currently known vulnerabilities in the original log4j. 
 
 The vulnerabilities in log4j are typically related to features around networking, databases and JMS. These are all features that were completely removed from this library, since we only want/have to support very basic use cases.
 
 This is also the source of the differences to the original log4j 1.2.17 branch.
+
+This list was last updated on Feb 7, 2022.
 
 ### CVE-2019-17571
 
@@ -75,6 +81,12 @@ A deserialization flaw was found in Apache Chainsaw versions prior to 2.1.0 whic
 **tacton-basic-logging resolution:**
 The Apache Chainsaw classes were completely removed.
 
+### CVE-2022-23307
+
+CVE-2020-9493 identified a deserialization issue that was present in Apache Chainsaw. Prior to Chainsaw V2.0 Chainsaw was a component of Apache Log4j 1.2.x where the same issue exists.
+
+**tacton-basic-logging resolution:**
+The Apache Chainsaw classes were completely removed.
 
 ## How about documentation?
 
